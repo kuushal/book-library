@@ -1,5 +1,16 @@
 let myLibrary = [new Book("Harry Potter", "J.K Rowling", 309, false), new Book("Frequency", "Penney Peirce", 400, false), new Book("American Psycho", "Bret Easton Ellis", 399, false)];
 
+const openFormButton = document.querySelector('.open-button')
+openFormButton.addEventListener('click', showForm);
+
+const addBookButton = document.querySelector('.add-book');
+addBookButton.addEventListener('click', addBookToLibrary)
+
+
+
+
+// functions
+
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -10,18 +21,37 @@ function Book(title, author, pages, read) {
     }
 }
 
+function showForm() {
+    document.querySelector('.form').style.display = 'block';
+}
 
-function addBookToLibrary(title, author, pages, read) {
-    const addBookButton = document.getElementsByClassName('')
-    newBook = new Book(title, author, pages, read);
-    console.log(newBook);
+function hideForm() {
+    document.querySelector('.form').style.display = 'none';
+}
+
+function clearForm() {
+    document.querySelector('.form').reset();
+}
+
+function addBookToLibrary(e) {
+    e.preventDefault();
+    let newTitle = document.querySelector('#new-title').value;
+    let newAuthor = document.querySelector('#new-author').value;
+    let newPages = document.querySelector('#new-pages').value;
+    let newRead = document.querySelector('#new-read').value.toLowerCase();
+
+    newBook = new Book(newTitle, newAuthor, newPages, newRead);
     myLibrary.push(newBook);
 
     displayAllBooks();
+    clearForm();
+    hideForm();
 }
 
 function displayAllBooks() {
     const main = document.querySelector('main');
+    main.innerHTML = '';
+
     for (let i = 0; i < myLibrary.length; i++) {
         const book = document.createElement('div');
         book.classList.add('book');
