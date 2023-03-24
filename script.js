@@ -1,16 +1,22 @@
 let myLibrary = [new Book("Harry Potter", "J.K Rowling", 309, false), new Book("Frequency", "Penney Peirce", 400, false), new Book("American Psycho", "Bret Easton Ellis", 399, false)];
 
+displayAllBooks();
+
 const openFormButton = document.querySelector('.open-button')
-openFormButton.addEventListener('click', showForm);
-
 const addBookButton = document.querySelector('.add-book');
-addBookButton.addEventListener('click', addBookToLibrary)
+const closeFormButton = document.querySelector('.close-form');
 
+
+
+
+// Event listerers
+openFormButton.addEventListener('click', showForm);
+addBookButton.addEventListener('click', addBookToLibrary)
+closeFormButton.addEventListener('click', hideForm);
 
 
 
 // functions
-
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -54,7 +60,13 @@ function displayAllBooks() {
 
     for (let i = 0; i < myLibrary.length; i++) {
         const book = document.createElement('div');
+        book.setAttribute('data-index-number', i);
         book.classList.add('book');
+
+        const removeBook = document.createElement('button');
+        removeBook.classList.add('delete-book');
+        removeBook.textContent = 'x';
+        book.appendChild(removeBook);
 
         const bookTitle = document.createElement('h2');
         bookTitle.classList.add('title');
@@ -77,8 +89,26 @@ function displayAllBooks() {
         book.appendChild(bookReadOrNot);
 
         main.appendChild(book);
+
+        setClickEventOnDeleteButton();
+    }
+
+}
+function setClickEventOnDeleteButton() {
+    const deleteBookButton = document.querySelectorAll('.delete-book');
+
+    for (let i = 0; i < deleteBookButton.length; i++) {
+        deleteBookButton[i].addEventListener('click', deleteBook)
     }
 
 }
 
-displayAllBooks();
+function deleteBook(e) {
+    console.log('delete function called')
+    let indexToDelete = e.target.parentNode.getAttribute('data-index-number');
+    console.log(indexToDelete)
+    myLibrary.splice(indexToDelete, 1);
+    displayAllBooks();
+}
+
+
