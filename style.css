@@ -46,9 +46,14 @@ main {
     flex-direction: column;
     border: 1px solid grey;
     width: 200px;
-    height: 200px;
+    height: 220px;
     padding: 1rem 2rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.change-status {
+    padding: 0.25rem;
+
 }
 
 /* form */

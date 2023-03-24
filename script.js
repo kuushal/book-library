@@ -88,9 +88,15 @@ function displayAllBooks() {
         bookReadOrNot.textContent = `Read:   ${myLibrary[i].read}`;
         book.appendChild(bookReadOrNot);
 
+        const changeBookStatus = document.createElement('button');
+        changeBookStatus.classList.add('change-status', 'btn');
+        changeBookStatus.textContent = 'Change Read Status';
+        book.appendChild(changeBookStatus);
+
         main.appendChild(book);
 
         setClickEventOnDeleteButton();
+        setClickEventOnChangeReadStatusButton();
     }
 
 }
@@ -102,6 +108,23 @@ function setClickEventOnDeleteButton() {
     }
 
 }
+
+function setClickEventOnChangeReadStatusButton() {
+    const changeStatusButtons = document.querySelectorAll('.change-status');
+
+    for (let i = 0; i < changeStatusButtons.length; i++) {
+        changeStatusButtons[i].addEventListener('click', changeStatus);
+    }
+}
+
+function changeStatus(e) {
+    let indexOfBookStatusChange = e.target.parentNode.getAttribute('data-index-number');
+    let statusOfCurrentBook = myLibrary[indexOfBookStatusChange].read;
+
+    myLibrary[indexOfBookStatusChange].read = statusOfCurrentBook ? false : true;
+    displayAllBooks();
+}
+
 
 function deleteBook(e) {
     console.log('delete function called')
