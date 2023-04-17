@@ -41,17 +41,50 @@ function clearForm() {
 
 function addBookToLibrary(e) {
     e.preventDefault();
-    let newTitle = document.querySelector('#new-title').value;
-    let newAuthor = document.querySelector('#new-author').value;
-    let newPages = document.querySelector('#new-pages').value;
-    let newRead = document.querySelector('#new-read').value.toLowerCase();
+    let newTitle = document.querySelector('#new-title');
+    let newAuthor = document.querySelector('#new-author');
+    let newPages = document.querySelector('#new-pages');
+    let newRead = document.querySelector('#new-read');
+    let valid = true;
 
-    newBook = new Book(newTitle, newAuthor, newPages, newRead);
-    myLibrary.push(newBook);
+    if (newTitle.value === '') {
+        newTitle.setCustomValidity('');
+        valid = false;
+        newTitle.setCustomValidity('Title cannot be empty');
+        newTitle.reportValidity();
+    }
+    else if (newAuthor.value === '') {
+        newAuthor.setCustomValidity('');
+        valid = false;
+        newAuthor.setCustomValidity('Author cannot be empty');
+        newAuthor.reportValidity();
+    } else if (newPages.value === '') {
+        newPages.setCustomValidity('');
+        valid = false;
+        newPages.setCustomValidity('Pages cannot be empty');
+        newPages.reportValidity();
+    } else if (!/[0-9]/.test(newPages.value)) {
+        newPages.setCustomValidity('');
+        valid = false;
+        newPages.setCustomValidity('Pages should contain only digits');
+        newPages.reportValidity();
+    } else if (newRead.value === '') {
+        newRead.setCustomValidity('');
+        valid = false;
+        newRead.setCustomValidity('Read status cannot be empty');
+        newRead.reportValidity();
+    } else {
+        valid = true;
+    }
 
-    displayAllBooks();
-    clearForm();
-    hideForm();
+    if (valid) {
+        newBook = new Book(newTitle.value, newAuthor.value, newPages.value, newRead.value.toLowerCase());
+        myLibrary.push(newBook);
+
+        displayAllBooks();
+        clearForm();
+        hideForm();
+    }
 }
 
 function displayAllBooks() {
